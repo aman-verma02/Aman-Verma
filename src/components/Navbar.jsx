@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { styles } from '../styles'
 import { Link } from 'react-router-dom'
 import { close, logo, menu } from '../assets'
@@ -11,6 +11,17 @@ const Navbar = () => {
   // using React hooks 
   const [active, setActive] = useState('');
   const [toggle, setToggle] = useState(false);
+
+  // for responsive navbar
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 640);
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 640);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
+  
 
 
 
@@ -30,11 +41,13 @@ const Navbar = () => {
           
 
           <img src={logo} alt='logo' className='w-12 h-12 object-contain' />
-<p className='text-white text-[18px] font-bold cursor-pointer flex items-center'>
-  Aman |&nbsp;  <TypeEffect />
-  <br />
-  <span className='sm:block hidden'> &nbsp;</span>
-</p>
+          <p className='text-white text-[18px] font-bold cursor-pointer flex items-center'>
+            Aman |&nbsp;
+            {isDesktop && <TypeEffect />}
+              <br />
+            <span className='sm:block hidden'>&nbsp;</span>
+          </p>
+
 
 
         </Link>
